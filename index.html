@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Resume Builder</h1>
+    </header>
+    
+    <section class="resume-form">
+        <h2>Enter Your Information</h2>
+        <form id="resumeForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address">
+            <label for="summary">Summary:</label>
+            <textarea id="summary"></textarea>
+            <h3>Education:</h3>
+            <div class="education">
+                <label for="school">School/University:</label>
+                <input type="text" class="school" required>
+                <label for="degree">Degree:</label>
+                <input type="text" class="degree" required>
+                <label for="eduDate">Graduation Date:</label>
+                <input type="text" class="eduDate" required>
+            </div>
+            <button type="button" id="addEducation">Add Education</button>
+            <h3>Experience:</h3>
+            <div class="experience">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" class="jobTitle" required>
+                <label for="company">Company:</label>
+                <input type="text" class="company" required>
+                <label for="expDate">Employment Period:</label>
+                <input type="text" class="expDate" required>
+            </div>
+            <button type="button" id="addExperience">Add Experience</button>
+            <button type="submit">Generate Resume</button>
+        </form>
+    </section>
+    <section class="resume-preview">
+        <h2>Your Resume</h2>
+        <div id="preview"></div>
+    </section>
+    <!-- ... (your existing HTML code) ... -->
+
+<!-- <script src="script.js"></script> -->
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const resumeForm = document.getElementById("resumeForm");
+    const preview = document.getElementById("preview");
+
+    resumeForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        preview.innerHTML = generateResume();
+    });
+
+    function generateResume() {
+        const fullName = document.getElementById("fullName").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const address = document.getElementById("address").value;
+        const summary = document.getElementById("summary").value;
+        const educationItems = document.querySelectorAll(".education");
+        const experienceItems = document.querySelectorAll(".experience");
+
+        let resumeHTML = `
+            <h3>${fullName}</h3>
+            <p>Email: ${email}</p>
+            <p>Phone: ${phone}</p>
+            <p>Address: ${address}</p>
+            <p>Summary: ${summary}</p>
+        `;
+
+        resumeHTML += "<h3>Education:</h3>";
+        educationItems.forEach((item) => {
+            const school = item.querySelector(".school").value;
+            const degree = item.querySelector(".degree").value;
+            const eduDate = item.querySelector(".eduDate").value;
+
+            resumeHTML += `
+                <div class="added-item">
+                    <p>School/University: ${school}</p>
+                    <p>Degree: ${degree}</p>
+                    <p>Graduation Date: ${eduDate}</p>
+                </div>
+            `;
+        });
+
+        resumeHTML += "<h3>Experience:</h3>";
+        experienceItems.forEach((item) => {
+            const jobTitle = item.querySelector(".jobTitle").value;
+            const company = item.querySelector(".company").value;
+            const expDate = item.querySelector(".expDate").value;
+
+            resumeHTML += `
+                <div class="added-item">
+                    <p>Job Title: ${jobTitle}</p>
+                    <p>Company: ${company}</p>
+                    <p>Employment Period: ${expDate}</p>
+                </div>
+            `;
+        });
+
+        return resumeHTML;
+    }
+});
+
+</script>
+
+
+    
+</body>
+</html>
